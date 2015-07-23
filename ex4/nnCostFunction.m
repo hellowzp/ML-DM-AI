@@ -61,19 +61,6 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 
-% for i = 1 : m
-%     for k = 1 : num_labels
-%         a1 = [ones(m,1) X];
-%         z2 = a1 * Theta1';
-%         a2 = [ ones( size(z2,1) ,1) sigmoid(z2)];
-%         z3 = a2 * Theta2';
-%         a3 = sigmoid(z3);   % the activation value of the k-th output
-%         J = J - y(i) * log(a3) - (1-y(i)) * log(1-a3);
-%     end
-% end
-% 
-% J = J/m;
-
 I = eye(num_labels);
 Y = zeros(m, num_labels);
 for i = 1 : m
@@ -86,7 +73,8 @@ A2 = [ones(size(Z2, 1), 1) sigmoid(Z2)];
 Z3 = A2 * Theta2';
 H = sigmoid(Z3);    % A3, the activation value of the k-th output unit
 
-penalty = (lambda/(2*m))*(sum(sum(Theta1(:, 2:end).^2, 2)) + sum(sum(Theta2(:,2:end).^2, 2)));
+penalty = (lambda/(2*m))*(sum(sum(Theta1(:, 2:end).^2, 2)) ...
+        + sum(sum(Theta2(:,2:end).^2, 2)));
 
 J = (1/m)*sum(sum((-Y).*log(H) - (1-Y).*log(1-H), 2));
 J = J + penalty;
